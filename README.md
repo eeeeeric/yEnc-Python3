@@ -28,6 +28,13 @@ Usage
 
 Use help(yenc) for more information.
 
+Testing
+-------
+
+You can run tests with
+
+    py.test test/test.py
+
 Notes
 -----
 
