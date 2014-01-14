@@ -15,16 +15,16 @@ there exists no C yenc module for python3 as of writing.
 Installation
 ------------
 
-python setup.py build
-python setup.py install
+    python setup.py build
+    python setup.py install
 
 Usage
 -----
 
-import yenc
+    import yenc
 
-size, crc32, encoded = yenc.encode(b'data')
-size, crc32, decoded = yenc.decode(encoded)
+    size, crc32, encoded = yenc.encode(b'data')
+    size, crc32, decoded = yenc.decode(encoded)
 
 Use help(yenc) for more information.
 
