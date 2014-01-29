@@ -57,7 +57,7 @@ static PyObject* encode(PyObject* self, PyObject* args)
         encoded[encoded_length++] = c;
         column++;
 
-        if (encoded_length >= LINE_LENGTH)
+        if (column >= LINE_LENGTH)
         {
             encoded[encoded_length++] = CR;
             encoded[encoded_length++] = LF;
