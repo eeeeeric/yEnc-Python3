@@ -13,7 +13,7 @@ def encode(data):
     crc32   -- the crc32 of the input data
     encoded -- the encoded data itself, without any headers/trailer
     """
-    return len(data), hex(zlib.crc32(data) & 0xffffffff)[-8:], _yenc.encode(data)
+    return len(data), _format_crc32(zlib.crc32(data)), _yenc.encode(data)
 
 def decode(data):
     """Decode the input data from yEnc back to its original format
@@ -29,4 +29,8 @@ def decode(data):
     decoded -- the decoded data itself
     """
     decoded = _yenc.decode(data)
-    return len(decoded), hex(zlib.crc32(decoded) & 0xffffffff)[-8:], decoded
+    return len(decoded), _format_crc32(zlib.crc32(decoded)), decoded
+
+def _format_crc32(crc32):
+    temp = hex(crc32 & 0xFFFFFFFF)[2:]
+    return '0' * (8-len(temp)) + temp

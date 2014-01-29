@@ -3,7 +3,7 @@ from distutils.core import setup, Extension
 
 setup(
     name        = '_yenc', 
-    version     = '0.1.0', 
+    version     = '0.1.2', 
     author      = 'Eric Zheng',
     url         = 'https://github.com/eeeeeric/yEnc-Python3',
     license     = 'GPL v3',
