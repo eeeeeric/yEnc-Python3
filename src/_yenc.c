@@ -3,20 +3,26 @@
 
 static PyObject* encode(PyObject* self, PyObject* args)
 {
-    /* Get input data */
+    /* Declare all vars now to support MSVC */
     const Py_buffer data;
+    char *encoded, *in;
+    Py_ssize_t i, encoded_length;
+    int column;
+    PyObject* retval;
+
+    /* Get input data */
     if (!PyArg_ParseTuple(args, "y*", &data))
         return NULL;
 
     /* Get output buffer */
-    char* encoded = (char*) malloc(BUF_SIZE(data.len));
+    encoded = (char*) malloc(BUF_SIZE(data.len));
     if (NULL == encoded)
         return PyErr_NoMemory();
 
     /* Encoding */
-    char* in  = (char*) data.buf;
-    Py_ssize_t i, encoded_length = 0;
-    int column = 0;
+    in = (char*) data.buf;
+    encoded_length = 0;
+    column = 0;
     for (i = 0; i < data.len; ++i)
     {
         int escape = 0;
@@ -66,26 +72,31 @@ static PyObject* encode(PyObject* self, PyObject* args)
     }
 
     /* Create bytes object to return */
-    PyObject* retval = PyBytes_FromStringAndSize(encoded, encoded_length);
+    retval = PyBytes_FromStringAndSize(encoded, encoded_length);
     free(encoded);
     return retval;
 }
 
 static PyObject* decode(PyObject* self, PyObject* args)
 {
-    /* Get input data */
+    /* Declare all vars now to support MSVC */
     const Py_buffer data;
+    char *decoded, *in;
+    Py_ssize_t i, decoded_length;
+    PyObject* retval;
+
+    /* Get input data */
     if (!PyArg_ParseTuple(args, "y*", &data))
         return NULL;
 
     /* Get output buffer - the decoded data can only be smaller */
-    char* decoded = (char*) malloc(data.len);
+    decoded = (char*) malloc(data.len);
     if (NULL == decoded)
         return PyErr_NoMemory();
 
     /* Decoding */
-    char* in  = (char*) data.buf;
-    Py_ssize_t i, decoded_length = 0;
+    in  = (char*) data.buf;
+    decoded_length = 0;
     for (i = 0; i < data.len; ++i)
     {
         int escape = 0;
@@ -109,7 +120,7 @@ static PyObject* decode(PyObject* self, PyObject* args)
     }
 
     /* Create bytes object to return */
-    PyObject* retval = PyBytes_FromStringAndSize(decoded, decoded_length);
+    retval = PyBytes_FromStringAndSize(decoded, decoded_length);
     free(decoded);
     return retval;
 }
